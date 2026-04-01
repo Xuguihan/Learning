@@ -22,9 +22,9 @@
 
 
 
-weather\_agent/
+weather_agent/
 
-├── weather\_agent.yml        # Dify 导出的 Agent 配置文件
+├── 天气助手.yml        # Dify 导出的 Agent 配置文件
 
 └── README.md                   # 项目说明文档
 
