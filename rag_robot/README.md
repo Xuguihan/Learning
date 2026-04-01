@@ -12,8 +12,8 @@
 
 本仓库保存了 Dify 平台上的机器人完整配置文件，结构如下：
 Learning/
-└── rag\_robot/
-├── rag\_robot\_config.yml    # \[必看] Dify 导出的机器人配置文件
+└── rag_robot/
+├── RAG机器人.yml           # \[必看] Dify 导出的机器人配置文件
 └── README.md               # 你正在看的说明文档
 
 ### 如何使用（还原机器人）
