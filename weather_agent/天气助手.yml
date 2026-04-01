@@ -1,0 +1,282 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  icon_type: emoji
+  mode: workflow
+  name: 天气助手
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/tongyi:0.1.33@608ec1e7d07dd52e582cff58561a8c75c989951186ffc59452dfffe3d8051230
+    version: null
+kind: app
+version: 0.6.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        attachment_image_file_size_limit: 2
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        file_upload_limit: 20
+        image_file_batch_limit: 10
+        image_file_size_limit: 10
+        single_chunk_attachment_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInLoop: false
+        sourceType: http-request
+        targetType: llm
+      id: 1774856687738-source-1774857134589-target
+      source: '1774856687738'
+      sourceHandle: source
+      target: '1774857134589'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1774857134589-source-1774857442649-target
+      source: '1774857134589'
+      sourceHandle: source
+      target: '1774857442649'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1774856645380-source-1774928985941-target
+      source: '1774856645380'
+      sourceHandle: source
+      target: '1774928985941'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: http-request
+      id: 1774928985941-source-1774856687738-target
+      source: '1774928985941'
+      sourceHandle: source
+      target: '1774856687738'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: 用户输入
+        type: start
+        variables:
+        - default: ''
+          hint: ''
+          label: city
+          max_length: 256
+          options: []
+          placeholder: ''
+          required: true
+          type: text-input
+          variable: city
+      height: 108
+      id: '1774856645380'
+      position:
+        x: 103
+        y: 265
+      positionAbsolute:
+        x: 103
+        y: 265
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: []
+          type: none
+        headers: ''
+        method: get
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP 请求
+        type: http-request
+        url: https://api.open-meteo.com/v1/forecast?latitude={{#1774928985941.lat#}}&longitude={{#1774928985941.lon#}}&current_weather=true
+        variables: []
+      height: 191
+      id: '1774856687738'
+      position:
+        x: 1044
+        y: 286
+      positionAbsolute:
+        x: 1044
+        y: 286
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: qwen3-max
+          provider: langgenius/tongyi/tongyi
+        prompt_template:
+        - id: 8e6f2c3f-e9c0-4a06-9b17-ae9919a2b170
+          role: system
+          text: '你是一个天气助手。下面是一段 JSON 格式的天气数据，请从中找到 current_we/ather.temperature 的值，然后输出一句话。
+
+            天气数据：{{#1774856687738.body#}}
+
+            '
+        selected: false
+        title: LLM
+        type: llm
+        vision:
+          enabled: false
+      height: 87
+      id: '1774857134589'
+      position:
+        x: 1468
+        y: 286
+      positionAbsolute:
+        x: 1468
+        y: 286
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        outputs:
+        - value_selector:
+          - '1774857134589'
+          - text
+          value_type: string
+          variable: text
+        selected: false
+        title: 输出
+        type: end
+      height: 88
+      id: '1774857442649'
+      position:
+        x: 1804
+        y: 286
+      positionAbsolute:
+        x: 1804
+        y: 286
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "import requests\n\ndef main(city: str) -> dict:\n    # 使用高德地图地理编码 API（免费，需要申请\
+          \ key）\n    # 这里先用一个简单对照表演示，你后面可以换成 API\n    city_coords = {\n        \"\
+          北京\": {\"lat\": 39.9042, \"lon\": 116.4074},\n        \"上海\": {\"lat\":\
+          \ 31.2304, \"lon\": 121.4737},\n        \"广州\": {\"lat\": 23.1291, \"lon\"\
+          : 113.2644},\n        \"深圳\": {\"lat\": 22.5431, \"lon\": 114.0579},\n \
+          \       \"成都\": {\"lat\": 30.5728, \"lon\": 104.0668},\n    }\n    \n  \
+          \  if city in city_coords:\n        return {\n            \"lat\": city_coords[city][\"\
+          lat\"],\n            \"lon\": city_coords[city][\"lon\"]\n        }\n  \
+          \  else:\n        # 默认返回北京\n        return {\"lat\": 39.9042, \"lon\": 116.4074}"
+        code_language: python3
+        outputs:
+          lat:
+            children: null
+            type: number
+          lon:
+            children: null
+            type: number
+        selected: false
+        title: 代码执行
+        type: code
+        variables:
+        - value_selector:
+          - '1774856645380'
+          - city
+          value_type: string
+          variable: city
+      height: 51
+      id: '1774928985941'
+      position:
+        x: 567
+        y: 286
+      positionAbsolute:
+        x: 567
+        y: 286
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: -1389
+      y: 8
+      zoom: 1
+  rag_pipeline_variables: []
